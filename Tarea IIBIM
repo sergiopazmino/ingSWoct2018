@@ -7,6 +7,9 @@ public class Palabras {
     
    public static void main(String[] args){
        try{
+           
+           System.out.println("BIENVENIDO A TAREA IIBIM - ING. DE SOFTWARE");
+           
            //Crea el archivo
            Formatter miarchivo = new Formatter ("SALIDA.txt");
            Scanner salida = new Scanner (System.in);
