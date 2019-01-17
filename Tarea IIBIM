@@ -1,30 +1,57 @@
-import java.util.Calendar;
-import java.util.GregorianCalendar;
- 
-public class calcularEdad {
- 
-	public static void main(String[] args) {
-		// Mostramos el resultado de llamar a la función calcular pasando
-		// como parametro la fecha de nacimiento
-		System.out.println(calcular(new GregorianCalendar(1970,02,14)));
-	}
- 
-    public static int calcular(Calendar fechaNac) {
-        Calendar fechaActual = Calendar.getInstance();
- 
-        // Cálculo de las diferencias.
-        int years = fechaActual.get(Calendar.YEAR) - fechaNac.get(Calendar.YEAR);
-        int months = fechaActual.get(Calendar.MONTH) - fechaNac.get(Calendar.MONTH);
-        int days = fechaActual.get(Calendar.DAY_OF_MONTH) - fechaNac.get(Calendar.DAY_OF_MONTH);
- 
-        // Hay que comprobar si el día de su cumpleaños es posterior
-        // a la fecha actual, para restar 1 a la diferencia de años,
-        // pues aún no ha sido su cumpleaños.
- 
-        if(months < 0 // Aún no es el mes de su cumpleaños
-           || (months==0 && days < 0)) { // o es el mes pero no ha llegado el día.
-            years--;
-        }
-        return years;
-    }
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Formatter;
+import java.util.Scanner;
+
+public class Palabras {
+    
+   public static void main(String[] args){
+       try{
+           //Crea el archivo
+           Formatter miarchivo = new Formatter ("SALIDA.txt");
+           Scanner salida = new Scanner (System.in);
+           
+           //Permite ingresar el texto y lo guarda en una variable
+           System.out.println("Ingrese el texto: ");
+           String ingreso = salida.nextLine();
+           
+           miarchivo.format("%s", ingreso);
+           miarchivo.close();
+           
+           System.out.println("\nTexto ingresado: ");
+           
+           Scanner leeArchivo = new Scanner (new File("SALIDA.txt"));
+           String linea = "";
+           
+           //Imprime lo que se ingreso por teclado
+           while(leeArchivo.hasNextLine()){
+               linea += leeArchivo.nextLine();
+               System.out.println(linea);
+           }
+           leeArchivo.close();
+           
+           //Muestra el total de palabras que se ingresaron
+           String [] palabras = linea.split(" ");
+           System.out.println("\nTOTAL PALABRAS: " + palabras.length);
+           
+           //Proceso para buscar la palabra
+           System.out.println("\nQUE PALABRA DESEAS BUSCAR?: ");
+           
+           String buscar = salida.nextLine();
+           int repetida = 0;
+           int cantidad = 0;
+           
+           //Localiza la palabra con un for mejorado
+           for (String palabra : palabras){
+               if (palabra.equals(buscar)){
+                   repetida ++;
+               }
+           }
+           System.out.printf("\nLA PALABRA %s SE REPITE %d VECES EN EL "
+                   + "TEXTO INGRESADO\n\n",buscar,repetida);
+       }
+       catch(FileNotFoundException ex){
+           System.out.println(ex.getMessage());
+       }
+   }      
 }
